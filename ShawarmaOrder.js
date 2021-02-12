@@ -8,6 +8,8 @@ const OrderState = Object.freeze({
     PAYMENT: Symbol("payment")
 });
 
+let total = 0;
+
 module.exports = class ShwarmaOrder extends Order{
     constructor(sNumber, sUrl){
         super(sNumber, sUrl);
@@ -16,6 +18,7 @@ module.exports = class ShwarmaOrder extends Order{
         this.sToppings = "";
         this.sDrinks = "";
         this.sItem = "shawarama";
+        this.sTotal = total;
     }
     handleInput(sInput){
         let aReturn = [];
@@ -26,18 +29,48 @@ module.exports = class ShwarmaOrder extends Order{
                 aReturn.push("What size would you like?");
                 break;
             case OrderState.SIZE:
+              if (sInput.toLowerCase() == "medium" || sInput.toLowerCase() == "large" || sInput.toLowerCase() == "small"){
                 this.stateCur = OrderState.TOPPINGS
                 this.sSize = sInput;
+                switch(sInput.toLowerCase()){
+                  case "medium":
+                    this.sTotal = this.sTotal + 5;
+                    break;
+                  case "large":
+                    this.sTotal = this.sTotal + 4;
+                    break;
+                  case "small":
+                    this.sTotal = this.sTotal + 3;
+                    break;
+                }
                 aReturn.push("What toppings would you like?");
+              } else {
+                aReturn.push("please enter MEDIUM, SMALL, or LARGE")
+              }
                 break;
             case OrderState.TOPPINGS:
+              if (sInput.toLowerCase() == "pepperoni" || sInput.toLowerCase() == "salami" || sInput.toLowerCase() == "teriyaki" || sInput.toLowerCase() == "keema"){
                 this.stateCur = OrderState.DRINKS
                 this.sToppings = sInput;
+                switch(sInput.toLowerCase()){
+                  case "pepperoni":
+                    this.sTotal = this.sTotal + 1;
+                    break;
+                  case "salami":
+                    this.sTotal = this.sTotal + 2;
+                  case "teriyaki":
+                    this.sTotal = this.sTotal + 3;
+                  case "keema":
+                    this.sTotal = this.sTotal + 4;
+                }
                 aReturn.push("Would you like drinks with that?");
+              } else {
+                aReturn.push("options are pepperoni, salami, teriyaki, and keema")
+              }
                 break;
             case OrderState.DRINKS:
                 this.stateCur = OrderState.PAYMENT;
-                this.nOrder = 15;
+                this.nOrder = this.sTotal;
                 if(sInput.toLowerCase() != "no"){
                     this.sDrinks = sInput;
                 }
