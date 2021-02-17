@@ -17,7 +17,7 @@ module.exports = class ShwarmaOrder extends Order{
         this.stateCur = OrderState.WELCOMING;
         this.sSize = "";
         this.sToppings = "";
-        this.sCurry = "";
+        //this.sCurry = "";
         this.sDrinks = "";
         this.sItem1 = "Dosa";
         this.sItem2 = "Curry"
@@ -96,7 +96,7 @@ module.exports = class ShwarmaOrder extends Order{
                     this.sDrinks = sInput;
                 }
                 aReturn.push("Thank-you for your order of");
-                aReturn.push(`${this.sSize} ${this.sItem1} with ${this.sToppings}`);
+                aReturn.push(`${this.sSize} ${this.sItem1} with ${this.sToppings} and ${this.sItem2} curry`);
                 if(this.sDrinks){
                     aReturn.push(this.sDrinks);
                 }
