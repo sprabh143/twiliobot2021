@@ -4,6 +4,7 @@ const OrderState = Object.freeze({
     WELCOMING:   Symbol("welcoming"),
     SIZE:   Symbol("size"),
     TOPPINGS:   Symbol("toppings"),
+    CURRY: Symbol("curry"),
     DRINKS:  Symbol("drinks"),
     PAYMENT: Symbol("payment")
 });
@@ -16,6 +17,7 @@ module.exports = class ShwarmaOrder extends Order{
         this.stateCur = OrderState.WELCOMING;
         this.sSize = "";
         this.sToppings = "";
+        this.sCurry = "";
         this.sDrinks = "";
         this.sItem1 = "Dosa";
         this.sItem2 = "Curry"
@@ -51,7 +53,7 @@ module.exports = class ShwarmaOrder extends Order{
                 break;
             case OrderState.TOPPINGS:
               if (sInput.toLowerCase() == "pepperoni" || sInput.toLowerCase() == "salami" || sInput.toLowerCase() == "teriyaki" || sInput.toLowerCase() == "keema"){
-                this.stateCur = OrderState.DRINKS
+                this.stateCur = OrderState.CURRY
                 this.sToppings = sInput;
                 switch(sInput.toLowerCase()){
                   case "pepperoni":
@@ -64,10 +66,28 @@ module.exports = class ShwarmaOrder extends Order{
                   case "keema":
                     this.sTotal = this.sTotal + 4;
                 }
-                aReturn.push("Would you like drinks with that?");
+                aReturn.push("What kind of curry would you like with that?");
               } else {
                 aReturn.push("options are pepperoni, salami, teriyaki, and keema")
               }
+                break;
+            case OrderState.CURRY:
+                if (sInput.toLowerCase() == "vindaloo" || sInput.toLowerCase() == "coconut" || sInput.toLowerCase() == "chickpea"){
+                    this.stateCur = OrderState.DRINKS
+                    this.sCurry = sInput;
+                    switch(sInput.toLowerCase()){
+                        case "vindaloo":
+                            this.sTotal = this.sTotal + 6;
+                            break;
+                        case "coconut":
+                            this.sTotal = this.sTotal + 8;
+                        case "chickpea":
+                            this.sTotal = this.sTotal + 5;
+                    }
+                    aReturn.push("Would you like drinks with that?")
+                } else {
+                    aReturn.push("options are vindaloo, coconut and chickpea")
+                }
                 break;
             case OrderState.DRINKS:
                 this.stateCur = OrderState.PAYMENT;
