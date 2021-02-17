@@ -5,6 +5,7 @@ const OrderState = Object.freeze({
     SIZE:   Symbol("size"),
     TOPPINGS:   Symbol("toppings"),
     CURRY: Symbol("curry"),
+    SPICY: Symbol("spicy"),
     DRINKS:  Symbol("drinks"),
     PAYMENT: Symbol("payment")
 });
@@ -17,7 +18,8 @@ module.exports = class ShwarmaOrder extends Order{
         this.stateCur = OrderState.WELCOMING;
         this.sSize = "";
         this.sToppings = "";
-        //this.sCurry = "";
+        this.sCurry = "";
+        this.sSpicy = "";
         this.sDrinks = "";
         this.sItem1 = "Dosa";
         this.sItem2 = "Curry"
@@ -36,10 +38,10 @@ module.exports = class ShwarmaOrder extends Order{
                 this.stateCur = OrderState.TOPPINGS
                 this.sSize = sInput;
                 switch(sInput.toLowerCase()){
-                  case "medium":
+                  case "large":
                     this.sTotal = this.sTotal + 5;
                     break;
-                  case "large":
+                  case "medium":
                     this.sTotal = this.sTotal + 4;
                     break;
                   case "small":
@@ -73,7 +75,7 @@ module.exports = class ShwarmaOrder extends Order{
                 break;
             case OrderState.CURRY:
                 if (sInput.toLowerCase() == "vindaloo" || sInput.toLowerCase() == "coconut" || sInput.toLowerCase() == "chickpea"){
-                    this.stateCur = OrderState.DRINKS
+                    this.stateCur = OrderState.SPICY
                     this.sCurry = sInput;
                     switch(sInput.toLowerCase()){
                         case "vindaloo":
@@ -84,9 +86,18 @@ module.exports = class ShwarmaOrder extends Order{
                         case "chickpea":
                             this.sTotal = this.sTotal + 5;
                     }
-                    aReturn.push("Would you like drinks with that?")
+                    aReturn.push("How spicy do you want it? On the scale of 1 to 5?")
                 } else {
                     aReturn.push("options are vindaloo, coconut and chickpea")
+                }
+                break;
+            case OrderState.SPICY:
+                if (sInput.toLowerCase() == "1" || sInput.toLowerCase() == "2" || sInput.toLowerCase() == "3" || sInput.toLowerCase() == "4" || sInput.toLowerCase() == "5"){
+                    this.stateCur = OrderState.DRINKS
+                    this.sSpicy = sInput;
+                    aReturn.push("Would you like drinks with that?")
+                } else {
+                    aReturn.push("options are 1, 2, 3, 4 and 5")
                 }
                 break;
             case OrderState.DRINKS:
@@ -96,9 +107,9 @@ module.exports = class ShwarmaOrder extends Order{
                     this.sDrinks = sInput;
                 }
                 aReturn.push("Thank-you for your order of");
-                aReturn.push(`${this.sSize} ${this.sItem1} with ${this.sToppings} and ${this.sItem2} curry`);
+                aReturn.push(`${this.sSize} ${this.sItem1} with ${this.sToppings} and ${this.sCurry} ${this.sItem2} with ${this.sSpicy} spiciness`);
                 if(this.sDrinks){
-                    aReturn.push(this.sDrinks);
+                    aReturn.push(`plus ${this.sDrinks}`);
                 }
                 aReturn.push(`Please pay for your order here`);
                 aReturn.push(`${this.sUrl}/payment/${this.sNumber}/`);
