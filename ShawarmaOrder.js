@@ -21,8 +21,8 @@ module.exports = class ShwarmaOrder extends Order{
         this.sCurry = "";
         this.sSpicy = "";
         this.sDrinks = "";
-        this.sItem1 = "Dosa";
-        this.sItem2 = "Curry"
+        this.sItem1 = "dosa";
+        this.sItem2 = "curry"
         this.sTotal = total;
     }
     handleInput(sInput){
@@ -31,7 +31,7 @@ module.exports = class ShwarmaOrder extends Order{
             case OrderState.WELCOMING:
                 this.stateCur = OrderState.SIZE;
                 aReturn.push("Welcome to Richard's Hut.");
-                aReturn.push("What size Dosa would you like?");
+                aReturn.push("What size dosa would you like?");
                 break;
             case OrderState.SIZE:
               if (sInput.toLowerCase() == "medium" || sInput.toLowerCase() == "large" || sInput.toLowerCase() == "small"){
