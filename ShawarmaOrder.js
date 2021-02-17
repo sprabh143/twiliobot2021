@@ -17,7 +17,8 @@ module.exports = class ShwarmaOrder extends Order{
         this.sSize = "";
         this.sToppings = "";
         this.sDrinks = "";
-        this.sItem = "shawarama";
+        this.sItem1 = "Dosa";
+        this.sItem2 = "Curry"
         this.sTotal = total;
     }
     handleInput(sInput){
@@ -25,8 +26,8 @@ module.exports = class ShwarmaOrder extends Order{
         switch(this.stateCur){
             case OrderState.WELCOMING:
                 this.stateCur = OrderState.SIZE;
-                aReturn.push("Welcome to Richard's Shawarma.");
-                aReturn.push("What size would you like?");
+                aReturn.push("Welcome to Richard's Hut.");
+                aReturn.push("What size Dosa would you like?");
                 break;
             case OrderState.SIZE:
               if (sInput.toLowerCase() == "medium" || sInput.toLowerCase() == "large" || sInput.toLowerCase() == "small"){
@@ -43,7 +44,7 @@ module.exports = class ShwarmaOrder extends Order{
                     this.sTotal = this.sTotal + 3;
                     break;
                 }
-                aReturn.push("What toppings would you like?");
+                aReturn.push("What fillings would you like?");
               } else {
                 aReturn.push("please enter MEDIUM, SMALL, or LARGE")
               }
@@ -75,7 +76,7 @@ module.exports = class ShwarmaOrder extends Order{
                     this.sDrinks = sInput;
                 }
                 aReturn.push("Thank-you for your order of");
-                aReturn.push(`${this.sSize} ${this.sItem} with ${this.sToppings}`);
+                aReturn.push(`${this.sSize} ${this.sItem1} with ${this.sToppings}`);
                 if(this.sDrinks){
                     aReturn.push(this.sDrinks);
                 }
