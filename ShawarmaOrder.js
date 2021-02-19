@@ -122,7 +122,7 @@ module.exports = class ShwarmaOrder extends Order{
                 this.isDone(true);
                 let d = new Date();
                 d.setMinutes(d.getMinutes() + 20);
-                aReturn.push(`Your order will be delivered at ${d.toTimeString()} to ${sInput.payer.address.country_code}`);
+                aReturn.push(`Your order will be delivered at ${d.toTimeString()} to ${sInput.purchase_units[0].shipping.address.address_line_1} ${sInput.purchase_units[0].shipping.address.admin_area_1} ${sInput.purchase_units[0].shipping.address.admin_area_2} ${sInput.purchase_units[0].shipping.address.country_code} ${sInput.purchase_units[0].shipping.address.postal_code}`);
                 break;
         }
         return aReturn;
