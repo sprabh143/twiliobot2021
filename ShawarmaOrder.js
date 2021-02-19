@@ -63,10 +63,13 @@ module.exports = class ShwarmaOrder extends Order{
                     break;
                   case "salami":
                     this.sTotal = this.sTotal + 2;
+                    break;
                   case "teriyaki":
                     this.sTotal = this.sTotal + 3;
+                    break;
                   case "keema":
                     this.sTotal = this.sTotal + 4;
+                    break;
                 }
                 aReturn.push("What kind of curry would you like with that?");
               } else {
